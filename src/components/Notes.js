@@ -143,7 +143,7 @@ const Notes = () => {
       </div>
 
       <div className="container row my-3">
-        <h2>Your Note</h2>
+        <h3>Your Note</h3>
         <div className="container mx-1">
           {notes.length === 0 && "You Have No Notes"}
         </div>
