@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-const Login = () => {
+const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let history = useNavigate();
 
@@ -21,13 +20,13 @@ const Login = () => {
     const json = await response.json();
     console.log(json);
 
-    if (json.success){
-        // Save the auth token and redirect
-        localStorage.setItem('token', json.authtoken);
-        history("/");
-    }
-    else{
-        alert("Invalid Credential");
+    if (json.success) {
+      // Save the auth token and redirect
+      localStorage.setItem("token", json.authtoken);
+      props.showAlert("Logged In Successfully", "success");
+      history("/");
+    } else {
+      props.showAlert("Invalid Credentials", "danger");
     }
   };
 
@@ -36,9 +35,10 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="mx-3">
+      <h3>Login Required To Continue For Notes</h3>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
+        <div className="mb-3 my-4">
           <label htmlFor="email" className="form-label">
             Email address
           </label>
@@ -51,9 +51,6 @@ const Login = () => {
             onChange={onChange}
             aria-describedby="emailHelp"
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
@@ -69,7 +66,7 @@ const Login = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Submit
+          Login
         </button>
       </form>
     </div>
